@@ -1,0 +1,135 @@
+function a_star(diagonal) {
+    console.log("Starting A*");
+
+    var openList = [];  //Array of FNode that are "Open" for eval
+    var closedList = []; //Array of FNode that are "Closded" for eval
+
+    function heuristic(position0, position1) {
+        let d1 = Math.abs(position1.x - position0.x);
+        let d2 = Math.abs(position1.y - position0.y);
+    
+        return d1 + d2;
+    }
+
+    function FNode(x,y){
+        this.x = x;
+        this.y = y;
+        this.f = 0; //total cost function
+        this.g = 0; // wt or cost function from start to the current grid point
+        this.h = 0; //heuristic estimated cost function from current grid point to the goal
+    }
+
+    function isContains(List,x_idx, y_idx){
+        return List.some((point) => point.x === x_idx && point.y === y_idx);
+    }
+
+    function isContainsArray(List,x_idx, y_idx){
+        return List.some((point) => point[0] == x_idx && point[1] == y_idx);
+    }
+
+    let dir = setDirection(diagonal);   //direction array for 8 direcrions(including diagonals)
+
+    let vis = new Array(maxCols*maxRows);   
+	vis = addWalls(vis, true);  //mark walls as visited
+	
+	let pathfound = false;
+	
+	let prevArr = prevCellArray();
+
+    let end = new FNode(destination[0], destination[1], 0, 0, 0);
+    openList.push(new FNode(source[0], source[1], 0, 0, 0)); 
+    console.log("animation starting");
+    cellsToAnimate.push( [source, "searching"] );
+
+
+    while(openList.length>0){
+        let lowestIdx = 0;
+
+        for (let i = 0; i < openList.length; i++) {
+            if (openList[i].f < openList[lowestIdx].f) {
+              lowestIdx = i;
+            }
+        }
+        
+        let currNode = openList[lowestIdx];
+        
+        if(currNode.x==destination[0] && currNode.y==destination[1]){   //Destination Found
+            pathfound = true;
+
+            var i = destination[0];
+            var j = destination[1];
+            cellsToAnimate.push( [destination, "success"] );
+            while (prevArr[i][j] != null){
+                var prevCell = prevArr[i][j];
+                i = prevCell[0];
+                j = prevCell[1];
+                cellsToAnimate.push( [[i, j], "success"] );
+		    }
+            break;
+        }
+
+        openList.splice(lowestIdx, 1);
+        //Adding animation
+        let idx = mapping1D(currNode.x,currNode.y,maxCols);
+        if(!$($("#tableHolder").find("td")[idx]).hasClass("hill") && !$($("#tableHolder").find("td")[idx]).hasClass("crater")
+         && !$($("#tableHolder").find("td")[idx]).hasClass("ice") && !$($("#tableHolder").find("td")[idx]).hasClass("storm"))
+        cellsToAnimate.push( [[currNode.x,currNode.y], "visited"] );
+        
+        closedList.push(currNode);
+
+        for(let i=0; i<dir.length; i++){    
+            let x = currNode.x + dir[i][0];
+			let y = currNode.y + dir[i][1];
+            
+			if(x<0 || y<0 || x>=maxRows || y>=maxCols || ($($("#tableHolder").find("td")[mapping1D(x,y,maxCols)]).hasClass("wall")) || isContainsArray(isWallArr,x,y)) 
+            continue;   //if x||y out of bounds or we encounter a wall
+
+            let nbr = new FNode(x,y,0,0,0);
+            
+            let wt = 1;
+            let typeOfCell = "NoWall";
+
+            if($($("#tableHolder").find("td")[mapping1D(x,y,maxCols)]).hasClass("hill")){
+                wt = 10;
+                typeOfCell = "hill"
+            }
+            if($($("#tableHolder").find("td")[mapping1D(x,y,maxCols)]).hasClass("crater")){
+                wt = 7;
+                typeOfCell = "crater"
+            }
+            if($($("#tableHolder").find("td")[mapping1D(x,y,maxCols)]).hasClass("ice")){
+                wt = 4;
+                typeOfCell = "ice"
+            }
+            if($($("#tableHolder").find("td")[mapping1D(x,y,maxCols)]).hasClass("storm")){
+                wt = 15;
+                typeOfCell = "storm"
+            }
+
+
+            if(!isContains(closedList,nbr.x,nbr.y)){
+                let smallestG = currNode.g + wt;
+            
+            
+                if(!isContains(openList,nbr.x,nbr.y)){
+                    openList.push(nbr);
+                    if(typeOfCell=="NoWall"){
+                        cellsToAnimate.push( [[nbr.x,nbr.y], "searching"]);
+                    }
+                    prevArr[nbr.x][nbr.y] = [currNode.x,currNode.y];
+                    
+                    //******************************* */
+                }else if(smallestG>=nbr.g){
+                    continue;
+                }
+
+                nbr.g = smallestG;
+                nbr.h = heuristic(nbr,end); //****************************** */
+                nbr.f = nbr.g + nbr.h;
+            }    
+        }
+    }
+    isWallArr = [];
+    return pathfound;
+}
+

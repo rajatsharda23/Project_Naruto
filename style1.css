@@ -1,0 +1,89 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+body {
+  background-image: url("images/narutovspain.png");
+  font-size: 22px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: aliceblue;
+  
+}
+h1{
+  padding:5;
+  color: aliceblue;
+  
+}
+
+p,a{
+  font-family: 'Merienda One', cursive;
+}
+
+.header{
+  margin: 40px 30px 20px 40px ;
+  display:flex;
+}
+
+#logo-heading{
+  color: rgb(236, 191, 146);
+  font-size:30px;
+  padding-left:20px;
+}
+.navbar{
+  width:80%;
+  margin-top:15%;
+}
+.menu{
+  background-color:rgb(15, 13, 24);
+  width:100%;
+}
+
+.menu li{
+	list-style: none;
+  padding:10px 0px 10px 40px;
+}
+.menu li a {
+  color: white;
+  text-decoration: none;
+  font-size: 19px;
+}
+
+.menu li a:hover {
+  background-color: white;
+  padding:10px;
+  color: black;
+}
+
+.menu li a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.content{
+  padding: 0 40px;
+}
+
+/* Responsive navigation menu (for mobile devices) */
+@media screen and (max-width: 830px) {
+  #logo-heading{
+    font-size:25px;
+  }
+}
+@media screen and (max-width: 991px) {
+  
+}
+@media screen and (max-width: 712px) {
+  #logo-heading{
+    font-size:20px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .navbar{
+    width:50%;
+  }
+}
+
