@@ -135,7 +135,7 @@ function checkDiagonalWalls(i, vis, algo) {
     if (r + 1 < maxRows && c + 1 < maxCols && $($("#tableHolder").find("td")[mapping1D(r + 1, c, maxCols)]).hasClass("wall") &&
         $($("#tableHolder").find("td")[mapping1D(r, c + 1, maxCols)]).hasClass("wall")){
             console.log("walls detected -> " + r+1 + " , " + c+1);
-            if(r+1!=destination[0] && c+1!=destination[1])isWallArr.push([r+1,c+1]);
+            isWallArr.push([r+1,c+1]);
             vis[mapping1D(r + 1, c + 1, maxCols)] = true;
     }
         
@@ -145,7 +145,7 @@ function checkDiagonalWalls(i, vis, algo) {
         $($("#tableHolder").find("td")[mapping1D(r, c + 1, maxCols)]).hasClass("wall")){
             console.log("walls detected -> " + r-1 + " , " + c+1);
             vis[mapping1D(r - 1, c + 1, maxCols)] = true;
-            if(r-1!=destination[0] && c+1!=destination[1])isWallArr.push([r-1,c+1]);
+            isWallArr.push([r-1,c+1]);
     }
         
     
@@ -153,7 +153,7 @@ function checkDiagonalWalls(i, vis, algo) {
         $($("#tableHolder").find("td")[mapping1D(r, c - 1, maxCols)]).hasClass("wall")){
             console.log("walls detected -> " + r+1 + " , " + c-1);
             vis[mapping1D(r + 1, c - 1, maxCols)] = true;
-            if(r+1!=destination[0] && c-1!=destination[1])isWallArr.push([r+1,c-1]);
+            isWallArr.push([r+1,c-1]);
     }
         
 
@@ -161,9 +161,8 @@ function checkDiagonalWalls(i, vis, algo) {
         $($("#tableHolder").find("td")[mapping1D(r, c - 1, maxCols)]).hasClass("wall")){
         console.log("walls detected -> " + r-1 + " , " + c-1);
         vis[mapping1D(r - 1, c - 1, maxCols)] = true;
-        if(r-1!=destination[0] && c-1!=destination[1])isWallArr.push([r-1,c-1]);
+        isWallArr.push([r-1,c-1]);
     }
-
 }
 
 //returns an array containing the directions along which movement is allowed, 
