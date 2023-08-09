@@ -64,9 +64,9 @@ function moveStartOrEnd(prevIndex, newIndex, startOrEnd) {
 
 function updateStart() {
     if (algo == "Dijkstra") {
-        $("#start").html("Run rover on Dijkstra");
+        $("#start").html("Search using Dijkstra");
     } else if (algo == "Breadth-First Search (BFS) with diagonals" || algo == "Breadth-First Search (BFS) without diagonals") {
-        $("#start").html("Run rover on BFS");
+        $("#start").html("Search using BFS");
     }
     return;
 }
