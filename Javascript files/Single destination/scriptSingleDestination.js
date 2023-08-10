@@ -12,6 +12,8 @@ var justFinished = false;
 var animationState = null;
 var delay = 8;
 var isWallArr = [];
+
+
 //************************************ 
 //Function to generate a grid
 //************************************ 
@@ -124,6 +126,35 @@ function addWalls(vis, diagonal) {
     }
     return vis;
 }
+
+//Function to make container for Glacier, Storm etc hiden iff BFS
+function hideWeightedOptions(){
+    $(document).ready(function(){
+        $("#BFS").click(function(){
+          $(".container").hide();
+        });
+        $("#BFSD").click(function(){
+            $(".container").hide();
+        })
+        console.log("hidded Weighted Options");
+      });
+}
+
+//Function to show the hidden Weighted Options
+function showWeightedOptions(){
+    $(document).ready(function(){
+        $("#Astar").click(function(){
+          $(".container").show();
+        });
+        $("#Djikstra").click(function(){
+            $(".container").show();
+        });
+        console.log("showed Weighted options");
+      });
+}
+
+hideWeightedOptions();
+showWeightedOptions();
 
 //if 2 neibouring cells are walls, then cant jump to the diagonal between them
 function checkDiagonalWalls(i, vis, algo) {
