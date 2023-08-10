@@ -19,8 +19,8 @@ p.ex1 {
 <body onload="page_load()">
 
 	<nav class="navbar navbar-expand-sm navbar-dark bg-transparent top-nav" id="myNavbar">
-	<img src="images/microsoft logo.png" class="microsoft-logo">
-	<a class="navbar-brand" href="index.html" id="logo"> The Mars Colonization Program: Team FireStar </a>
+	<img src="images/naru.jpeg" class="pain_logo">
+	<a class="navbar-brand" href="index.html" id="logo"> Naruto V/S Pain </a>
 	</nav>
 
 	<nav class="navbar navbar-expand-sm navbar-dark bg-transparent">
@@ -48,8 +48,34 @@ p.ex1 {
 						<a class="dropdown-item" href="#" id="many">Multiple Pain</a>
 				</div>
 			</li>
-		 
-	    </ul>
+
+		<li class="nav-item dropdown" id="speed">
+			<a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				  Speed
+			</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#">Slow</a>
+						<a class="dropdown-item" href="#">Medium</a>
+						<a class="dropdown-item" href="#">Fast</a>
+						
+					</div>
+		</li>	 
+		</ul>
+
+		<label class="container">
+			<input type="checkbox" id="hillCheck" onclick="hill_true()">
+			<span class="checkmark" >Create hill</span>
+
+			<input type="checkbox" id="craterCheck" onclick="crater_true()">
+			<span class="checkmark" >Create crater</span>
+
+			<input type="checkbox" id="iceCheck" onclick="ice_true()">
+			<span class="checkmark" >Create glacier</span>
+
+			<input type="checkbox" id="stormCheck" onclick="storm_true()">
+			<span class="checkmark" >Create storm</span>
+		</label>
+
 	    <button class="btn btn-outline-light btn-space" type="submit" id="start">Start Search</button>  
 		<button type="button" class="btn btn-outline-light btn-space" type="submit" id="clear">Clear Grid</button>
 	      	

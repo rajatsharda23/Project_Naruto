@@ -50,7 +50,6 @@ function moveStartOrEnd(prevIndex, newIndex, startOrEnd) {
     return;
 }
 
-
 //************************************ 
 //Function to update the start button name based on the algo chosen
 //************************************ 
@@ -96,6 +95,7 @@ function executeAlgo() {
     }
     return pathFound;
 }
+
 //************************************ 
 //Function to make the wall
 //************************************ 
@@ -208,7 +208,6 @@ function prevCellArray(){
     }
     return prevArray;
 }
-
 
 async function animateCells() {
     animationState = null;

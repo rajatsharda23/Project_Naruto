@@ -84,15 +84,16 @@ function a_star(diagonal) {
 
         for(let i=0; i<dir.length; i++){    
             let x = currNode.x + dir[i][0];
-			let y = currNode.y + dir[i][1];
+			let y = currNode.y + dir[i][1]; 
             
 
-            if(isContainsArray(isWallArr,x,y)){
-                destinationFound(currNode.x, currNode.y);
-                if(flag) break;
-                if(!($($("#tableHolder").find("td")[mapping1D(x,y,maxCols)]).hasClass("wall")))cellsToAnimate.push( [[x,y], "visited"] );
-                continue;
-            }
+            // if(isContainsArray(isWallArr,x,y)){
+            //     destinationFound(currNode.x, currNode.y);
+            //     if(flag) break;
+            //     if(!($($("#tableHolder").find("td")[mapping1D(x,y,maxCols)]).hasClass("wall")))cellsToAnimate.push( [[x,y], "visited"] );
+            //     continue;
+            // }
+
 			if(x<0 || y<0 || x>=maxRows || y>=maxCols || ($($("#tableHolder").find("td")[mapping1D(x,y,maxCols)]).hasClass("wall"))) 
             continue;   //if x||y out of bounds or we encounter a wall
 
@@ -118,7 +119,6 @@ function a_star(diagonal) {
                 wt = 15;
                 typeOfCell = "storm"
             }
-
 
             if(!isContains(closedList,nbr.x,nbr.y)){
                 let smallestG = currNode.g + wt;
