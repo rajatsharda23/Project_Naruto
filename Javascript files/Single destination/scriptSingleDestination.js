@@ -12,6 +12,8 @@ var justFinished = false;
 var animationState = null;
 var delay = 8;
 var isWallArr = [];
+
+
 //************************************ 
 //Function to generate a grid
 //************************************ 
@@ -49,7 +51,6 @@ function moveStartOrEnd(prevIndex, newIndex, startOrEnd) {
     clearBoard(keepWalls = true); //if we move the nodes after running the algos then it clears the board and move the nodes
     return;
 }
-
 
 //************************************ 
 //Function to update the start button name based on the algo chosen
@@ -96,6 +97,7 @@ function executeAlgo() {
     }
     return pathFound;
 }
+
 //************************************ 
 //Function to make the wall
 //************************************ 
@@ -125,6 +127,35 @@ function addWalls(vis, diagonal) {
     return vis;
 }
 
+//Function to make container for Glacier, Storm etc hiden iff BFS
+function hideWeightedOptions(){
+    $(document).ready(function(){
+        $("#BFS").click(function(){
+          $(".container").hide();
+        });
+        $("#BFSD").click(function(){
+            $(".container").hide();
+        })
+        console.log("hidded Weighted Options");
+      });
+}
+
+//Function to show the hidden Weighted Options
+function showWeightedOptions(){
+    $(document).ready(function(){
+        $("#Astar").click(function(){
+          $(".container").show();
+        });
+        $("#Djikstra").click(function(){
+            $(".container").show();
+        });
+        console.log("showed Weighted options");
+      });
+}
+
+hideWeightedOptions();
+showWeightedOptions();
+
 //if 2 neibouring cells are walls, then cant jump to the diagonal between them
 function checkDiagonalWalls(i, vis, algo) {
     let cell = mapping2D(i, maxCols);
@@ -135,7 +166,7 @@ function checkDiagonalWalls(i, vis, algo) {
     if (r + 1 < maxRows && c + 1 < maxCols && $($("#tableHolder").find("td")[mapping1D(r + 1, c, maxCols)]).hasClass("wall") &&
         $($("#tableHolder").find("td")[mapping1D(r, c + 1, maxCols)]).hasClass("wall")){
             console.log("walls detected -> " + r+1 + " , " + c+1);
-            if(r+1!=destination[0] && c+1!=destination[1])isWallArr.push([r+1,c+1]);
+            isWallArr.push([r+1,c+1]);
             vis[mapping1D(r + 1, c + 1, maxCols)] = true;
     }
         
@@ -145,7 +176,7 @@ function checkDiagonalWalls(i, vis, algo) {
         $($("#tableHolder").find("td")[mapping1D(r, c + 1, maxCols)]).hasClass("wall")){
             console.log("walls detected -> " + r-1 + " , " + c+1);
             vis[mapping1D(r - 1, c + 1, maxCols)] = true;
-            if(r-1!=destination[0] && c+1!=destination[1])isWallArr.push([r-1,c+1]);
+            isWallArr.push([r-1,c+1]);
     }
         
     
@@ -153,7 +184,7 @@ function checkDiagonalWalls(i, vis, algo) {
         $($("#tableHolder").find("td")[mapping1D(r, c - 1, maxCols)]).hasClass("wall")){
             console.log("walls detected -> " + r+1 + " , " + c-1);
             vis[mapping1D(r + 1, c - 1, maxCols)] = true;
-            if(r+1!=destination[0] && c-1!=destination[1])isWallArr.push([r+1,c-1]);
+            isWallArr.push([r+1,c-1]);
     }
         
 
@@ -161,9 +192,8 @@ function checkDiagonalWalls(i, vis, algo) {
         $($("#tableHolder").find("td")[mapping1D(r, c - 1, maxCols)]).hasClass("wall")){
         console.log("walls detected -> " + r-1 + " , " + c-1);
         vis[mapping1D(r - 1, c - 1, maxCols)] = true;
-        if(r-1!=destination[0] && c-1!=destination[1])isWallArr.push([r-1,c-1]);
+        isWallArr.push([r-1,c-1]);
     }
-
 }
 
 //returns an array containing the directions along which movement is allowed, 
@@ -209,7 +239,6 @@ function prevCellArray(){
     }
     return prevArray;
 }
-
 
 async function animateCells() {
     animationState = null;

@@ -3,7 +3,6 @@ fuctions used- cellsToAnimate(), addWalls(), prevCellArray(), setDirection(), ma
 //funtion to perform Breadth-first search
 //It takes 1 boolean argument to specify whether diagonal movement is allowed or not
 
-
 function bfs(diagonal) {
 
     var queue = new Queue();

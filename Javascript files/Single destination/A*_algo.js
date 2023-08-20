@@ -1,8 +1,25 @@
 function a_star(diagonal) {
     console.log("Starting A*");
-
+    let flag = false; // To check if Destination is found
     var openList = [];  //Array of FNode that are "Open" for eval
     var closedList = []; //Array of FNode that are "Closded" for eval
+
+    function destinationFound(x,y){
+        if(x==destination[0] && y==destination[1] ){   //Destination Found
+            pathfound = true;
+
+            var i = destination[0];
+            var j = destination[1];
+            cellsToAnimate.push( [destination, "success"] );
+            while (prevArr[i][j] != null){
+                var prevCell = prevArr[i][j];
+                i = prevCell[0];
+                j = prevCell[1];
+                cellsToAnimate.push( [[i, j], "success"] );
+		    }
+            flag = true;
+        }
+    }
 
     function heuristic(position0, position1) {
         let d1 = Math.abs(position1.x - position0.x);
@@ -53,20 +70,8 @@ function a_star(diagonal) {
         
         let currNode = openList[lowestIdx];
         
-        if(currNode.x==destination[0] && currNode.y==destination[1]){   //Destination Found
-            pathfound = true;
-
-            var i = destination[0];
-            var j = destination[1];
-            cellsToAnimate.push( [destination, "success"] );
-            while (prevArr[i][j] != null){
-                var prevCell = prevArr[i][j];
-                i = prevCell[0];
-                j = prevCell[1];
-                cellsToAnimate.push( [[i, j], "success"] );
-		    }
-            break;
-        }
+        destinationFound(currNode.x, currNode.y);
+        if(flag) break;
 
         openList.splice(lowestIdx, 1);
         //Adding animation
@@ -79,10 +84,19 @@ function a_star(diagonal) {
 
         for(let i=0; i<dir.length; i++){    
             let x = currNode.x + dir[i][0];
-			let y = currNode.y + dir[i][1];
+			let y = currNode.y + dir[i][1]; 
             
-			if(x<0 || y<0 || x>=maxRows || y>=maxCols || ($($("#tableHolder").find("td")[mapping1D(x,y,maxCols)]).hasClass("wall")) || isContainsArray(isWallArr,x,y)) 
+
+            // if(isContainsArray(isWallArr,x,y)){
+            //     destinationFound(currNode.x, currNode.y);
+            //     if(flag) break;
+            //     if(!($($("#tableHolder").find("td")[mapping1D(x,y,maxCols)]).hasClass("wall")))cellsToAnimate.push( [[x,y], "visited"] );
+            //     continue;
+            // }
+
+			if(x<0 || y<0 || x>=maxRows || y>=maxCols || ($($("#tableHolder").find("td")[mapping1D(x,y,maxCols)]).hasClass("wall"))) 
             continue;   //if x||y out of bounds or we encounter a wall
+
 
             let nbr = new FNode(x,y,0,0,0);
             
@@ -105,7 +119,6 @@ function a_star(diagonal) {
                 wt = 15;
                 typeOfCell = "storm"
             }
-
 
             if(!isContains(closedList,nbr.x,nbr.y)){
                 let smallestG = currNode.g + wt;

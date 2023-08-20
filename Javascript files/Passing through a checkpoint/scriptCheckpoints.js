@@ -13,6 +13,7 @@ var cellsToAnimate = [];
 var justFinished = false;
 var animationState = null;
 var cellsNotToAnimate = [];
+var delay = 8;
 var animateFirstOrSecond = false;
 
 //************************************ 
@@ -66,9 +67,9 @@ function moveStartOrEnd(prevIndex, newIndex, startOrEnd) {
 
 function updateStart() {
     if (algo == "Dijkstra") {
-        $("#start").html("Run rover on Dijkstra");
+        $("#start").html("Search using Dijkstra");
     } else if (algo == "Breadth-First Search (BFS) with diagonals" || algo == "Breadth-First Search (BFS) without diagonals") {
-        $("#start").html("Run rover on BFS");
+        $("#start").html("Search using BFS");
     }
     return;
 }
@@ -245,10 +246,14 @@ async function animateCells() {
 
 
 function getDelay() {
-    var delay;
-    delay = 3;
-    console.log("Delay = " + delay);
-    return delay;
+    if(speed=="Fast")
+		delay=3;
+	if(speed=="Medium")
+		delay=9;
+	if(speed=="Slow")
+		delay=20;
+	console.log("Delay = " + delay);
+	return delay;
 }
 
 function page_load()
