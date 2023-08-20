@@ -10,7 +10,7 @@ var makeWalls = false;
 var cellsToAnimate = [];
 var justFinished = false;
 var animationState = null;
-var delay = 8;
+var delay = 5;
 var isWallArr = [];
 
 
@@ -64,7 +64,6 @@ function updateStart() {
     }else if (algo == "A*") {
         $("#start").html("Seach using A*");
     }
-    
     return;
 }
 

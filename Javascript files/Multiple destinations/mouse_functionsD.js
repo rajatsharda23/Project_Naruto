@@ -105,3 +105,8 @@ $("#algorithms .dropdown-item").click(function() {
     updateStart();
     console.log("Algorithm has been changd to: " + algo);
 });
+
+$( "#speed .dropdown-item").click(function(){
+	speed = $(this).text();
+	getDelay(speed);
+});

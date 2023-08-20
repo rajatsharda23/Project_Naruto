@@ -2,7 +2,7 @@ var maxRows = 15; //It denotes the total number of rows
 var maxCols = 35; //It denotes the total number of columns
 var source = [7, 10]; //It points to the source cell
 var destination = [4, 30]; //It points to the destination cell
-var destination1 = [3, 60]; //It points to the destination1 cell
+var destination1 = [4, 60]; //It points to the second destination1 cell
 var movingSrc = false; //whether the source is moving or not
 var movingDest = false; ////whether the destination is moving or not
 var movingDest1 = false; ////whether the destination1 is moving or not
@@ -11,6 +11,7 @@ var ongoing = false; //It check if the algo is in process ot not
 var makeWalls = false;
 var cellsToAnimate = [];
 var justFinished = false;
+var delay = 5;
 var animationState = null;
 
 //************************************ 
@@ -95,6 +96,8 @@ function executeAlgo() {
         var pathFound = bfs(true);
     }else if(algo == "Breadth-First Search (BFS) without diagonals"){
         var pathFound = bfs(false);
+    }else if(algo=="A*"){
+        var pathFound = a_star(true);
     }
     return pathFound;
 }
@@ -114,6 +117,37 @@ function makeWall(cell) {
         $(cell).toggleClass("wall");
     }
 }
+
+//Function to make container for Glacier, Storm etc hiden iff BFS
+function hideWeightedOptions(){
+    $(document).ready(function(){
+        $("#BFS").click(function(){
+          $(".container").hide();
+        });
+        $("#BFSD").click(function(){
+            $(".container").hide();
+        })
+        console.log("hidded Weighted Options");
+      });
+}
+
+//Function to show the hidden Weighted Options
+function showWeightedOptions(){
+    $(document).ready(function(){
+        // $("#Astar").click(function(){
+        //   $(".container").show();
+        // });
+        $("#Djikstra").click(function(){
+            $(".container").show();
+        });
+        console.log("showed Weighted options");
+      });
+}
+
+hideWeightedOptions();
+showWeightedOptions();
+
+
 //************************************ 
 function createVisited() {
     var visited = [];
@@ -201,7 +235,7 @@ async function animateCells() {
     var endCellIndex = (destination[0] * (maxCols)) + destination[1];
     var endCell1Index = (destination1[0] * (maxCols)) + destination1[1];
 
-    var delay = getDelay();
+    delay = getDelay(speed);
     for (var i = 0; i < cellsToAnimate.length; i++) {
         var cellCoordinates = cellsToAnimate[i][0];
         var x = cellCoordinates[0];
@@ -224,11 +258,15 @@ async function animateCells() {
 }
 
 
-function getDelay() {
-    var delay;
-    delay = 3;
-    console.log("Delay = " + delay);
-    return delay;
+function getDelay(speed){
+	if(speed=="Fast")
+		delay=3;
+	if(speed=="Medium")
+		delay=9;
+	if(speed=="Slow")
+		delay=20;
+	console.log("Delay = " + delay);
+	return delay;
 }
 
 function page_load()

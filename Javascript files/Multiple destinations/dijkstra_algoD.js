@@ -98,7 +98,6 @@ function dijkstra() {
                 pathFound = true;
             }
 
-
             break;
         }
         var neighbors = getNeighbors(i, j);
@@ -124,7 +123,6 @@ function dijkstra() {
 
 
     if (pathFound) {
-
 
         if (whichEndDij == 0) {
             var i = destination[0];
@@ -153,22 +151,6 @@ function dijkstra() {
             }
 
         }
-
-
-
-
-
-
-
     }
-
-
-
-
-
     return pathFound;
-
-
-
-
 }
