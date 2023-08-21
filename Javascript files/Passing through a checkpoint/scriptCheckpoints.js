@@ -15,7 +15,7 @@ var animationState = null;
 var cellsNotToAnimate = [];
 var delay = 8;
 var animateFirstOrSecond = false;
-
+var visited = [];
 //************************************ 
 //Function to generate a grid
 //************************************ 

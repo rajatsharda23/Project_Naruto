@@ -1,16 +1,16 @@
-function a_star(diagonal) {
+function a_star(diagonal,destinationArr) {
     console.log("Starting A*");
-    let flag = false; // To check if Destination is found
+    let flag = false; // To check if destinationArr is found
     var openList = [];  //Array of FNode that are "Open" for eval
     var closedList = []; //Array of FNode that are "Closded" for eval
 
-    function destinationFound(x,y){
-        if(x==destination[0] && y==destination[1] ){   //Destination Found
+    function destinationArrFound(x,y){
+        if(x==destinationArr[0] && y==destinationArr[1] ){   //destinationArr Found
             pathfound = true;
 
-            var i = destination[0];
-            var j = destination[1];
-            cellsToAnimate.push( [destination, "success"] );
+            var i = destinationArr[0];
+            var j = destinationArr[1];
+            cellsToAnimate.push( [destinationArr, "success"] );
             while (prevArr[i][j] != null){
                 var prevCell = prevArr[i][j];
                 i = prevCell[0];
@@ -53,7 +53,7 @@ function a_star(diagonal) {
 	
 	let prevArr = prevCellArray();
 
-    let end = new FNode(destination[0], destination[1], 0, 0, 0);
+    let end = new FNode(destinationArr[0], destinationArr[1], 0, 0, 0);
     openList.push(new FNode(source[0], source[1], 0, 0, 0)); 
     console.log("animation starting");
     cellsToAnimate.push( [source, "searching"] );
@@ -70,7 +70,7 @@ function a_star(diagonal) {
         
         let currNode = openList[lowestIdx];
         
-        destinationFound(currNode.x, currNode.y);
+        destinationArrFound(currNode.x, currNode.y);
         if(flag) break;
 
         openList.splice(lowestIdx, 1);
@@ -88,7 +88,7 @@ function a_star(diagonal) {
             
 
             // if(isContainsArray(isWallArr,x,y)){
-            //     destinationFound(currNode.x, currNode.y);
+            //     destinationArrFound(currNode.x, currNode.y);
             //     if(flag) break;
             //     if(!($($("#tableHolder").find("td")[mapping1D(x,y,maxCols)]).hasClass("wall")))cellsToAnimate.push( [[x,y], "visited"] );
             //     continue;

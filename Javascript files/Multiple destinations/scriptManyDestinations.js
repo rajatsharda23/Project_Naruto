@@ -68,7 +68,10 @@ function updateStart() {
         $("#start").html("Search using Dijkstra");
     } else if (algo == "Breadth-First Search (BFS) with diagonals" || algo == "Breadth-First Search (BFS) without diagonals") {
         $("#start").html("Search using BFS");
+    } else if (algo == "A*") {
+        $("#start").html("Seach using A*");
     }
+    
     return;
 }
 
@@ -97,7 +100,8 @@ function executeAlgo() {
     }else if(algo == "Breadth-First Search (BFS) without diagonals"){
         var pathFound = bfs(false);
     }else if(algo=="A*"){
-        var pathFound = a_star(true);
+        var pathFound = a_star(true,destination1);
+        // var pathFound = a_star(true,destination);
     }
     return pathFound;
 }
@@ -294,6 +298,46 @@ function clearBoard(keepWalls) {
     }
 }
 
+function checkDiagonalWalls(i, vis, algo) {
+    let cell = mapping2D(i, maxCols);
+    let r = cell[0]
+    let c = cell[1]
+        // checks row column value will be within range
+        //if down and right are walls, then we cant go to down-right
+    if (r + 1 < maxRows && c + 1 < maxCols && $($("#tableHolder").find("td")[mapping1D(r + 1, c, maxCols)]).hasClass("wall") &&
+        $($("#tableHolder").find("td")[mapping1D(r, c + 1, maxCols)]).hasClass("wall")){
+            console.log("walls detected -> " + r+1 + " , " + c+1);
+            isWallArr.push([r+1,c+1]);
+            vis[mapping1D(r + 1, c + 1, maxCols)] = true;
+    }
+        
+
+    //if up and right are walls, then we cant pass through it to reach up-right cell
+    if (r - 1 > 0 && c + 1 < maxCols && $($("#tableHolder").find("td")[mapping1D(r - 1, c, maxCols)]).hasClass("wall") &&
+        $($("#tableHolder").find("td")[mapping1D(r, c + 1, maxCols)]).hasClass("wall")){
+            console.log("walls detected -> " + r-1 + " , " + c+1);
+            vis[mapping1D(r - 1, c + 1, maxCols)] = true;
+            isWallArr.push([r-1,c+1]);
+    }
+        
+    
+    if (r + 1 < maxRows && c - 1 > 0 && $($("#tableHolder").find("td")[mapping1D(r + 1, c, maxCols)]).hasClass("wall") &&
+        $($("#tableHolder").find("td")[mapping1D(r, c - 1, maxCols)]).hasClass("wall")){
+            console.log("walls detected -> " + r+1 + " , " + c-1);
+            vis[mapping1D(r + 1, c - 1, maxCols)] = true;
+            isWallArr.push([r+1,c-1]);
+    }
+        
+
+    if (r - 1 > 0 && c - 1 > 0 && $($("#tableHolder").find("td")[mapping1D(r - 1, c, maxCols)]).hasClass("wall") &&
+        $($("#tableHolder").find("td")[mapping1D(r, c - 1, maxCols)]).hasClass("wall")){
+        console.log("walls detected -> " + r-1 + " , " + c-1);
+        vis[mapping1D(r - 1, c - 1, maxCols)] = true;
+        isWallArr.push([r-1,c-1]);
+    }
+}
+
+
 // Ending statements
 clearBoard();
 
@@ -319,3 +363,6 @@ document.write('<script type="text/javascript" src="Javascript files/Multiple de
 
 //Javascript file to include Dijkstra algo
 document.write('<script type="text/javascript" src="Javascript files/Multiple destinations/bfs_newD.js" ></script>');
+
+//Javascript file to include A* algo
+document.write('<script type="text/javascript" src="Javascript files/Multiple destinations/A*_algo.js" ></script>');
