@@ -69,7 +69,9 @@ function updateStart() {
     if (algo == "Dijkstra") {
         $("#start").html("Search using Dijkstra");
     } else if (algo == "Breadth-First Search (BFS) with diagonals" || algo == "Breadth-First Search (BFS) without diagonals") {
-        $("#start").html("Search using BFS");
+        $("#start").html("Seach using BFS");
+    }else if (algo == "A*") {
+        $("#start").html("Seach using A*");
     }
     return;
 }
@@ -100,6 +102,12 @@ function executeAlgo() {
         var pathFound1 = bfsFromStoC(false);
         var pathFound2 = bfsFromCtoD(false);
         var pathFound=pathFound1+pathFound2;
+    }else if(algo=="Dijkstra"){
+        var pathFound1 = dijkstra(true,source,checkpoint1);
+        var pathFound2 = dijkstra(true,checkpoint1,destination);
+    }else if(algo=="A*"){
+        var pathFound1 = a_star(true,source,checkpoint1);
+        var pathFound2 = a_star(true,checkpoint1,destination);
     }
     return pathFound;
 }
@@ -121,7 +129,7 @@ function makeWall(cell) {
 }
 //************************************ 
 function createVisited() {
-    var visited = [];
+    // var visited = [];
     var cells = $("#tableHolder").find("td");
     for (var i = 0; i < maxRows; i++) {
         var row = [];
@@ -155,6 +163,47 @@ function makeWalls() {
     }
     return walls;
 }
+
+//Function to make container for Glacier, Storm etc hiden iff BFS
+function hideWeightedOptions(){
+    $(document).ready(function(){
+        $("#BFS").click(function(){
+          $(".container").hide();
+        });
+        $("#BFSD").click(function(){
+            $(".container").hide();
+        })
+        console.log("hidded Weighted Options");
+      });
+}
+
+//Function to show the hidden Weighted Options
+function showWeightedOptions(){
+    $(document).ready(function(){
+        $("#Astar").click(function(){
+          $(".container").show();
+        });
+        $("#Djikstra").click(function(){
+            $(".container").show();
+        });
+        console.log("showed Weighted options");
+      });
+}
+
+hideWeightedOptions();
+showWeightedOptions();
+
+
+function mapping1D(row, column, totalColumn){
+	return (row * totalColumn) + column;
+}
+
+function mapping2D(index, totalColumn){
+    console.log(index, +" => "+index / totalColumn+" "+index % totalColumn);
+	var position = [Math.floor(index / totalColumn), Math.floor(index % totalColumn)];
+	return position
+}
+
 
 function neighborsThatAreWalls(neighbors, walls) {
     var neighboringWalls = 0;
@@ -268,6 +317,10 @@ function clearBoard(keepWalls) {
     var checkpoint1Index = (checkpoint1[0] * (maxCols)) + checkpoint1[1];
     for (var i = 0; i < cells.length; i++) {
         isWall = $(cells[i]).hasClass("wall");
+        isHill = $( cells[i] ).hasClass("hill");
+		isCrater = $( cells[i] ).hasClass("crater");
+		isIce = $( cells[i] ).hasClass("ice");
+		isStorm = $( cells[i] ).hasClass("storm");
         $(cells[i]).removeClass();
         if (i == startCellIndex) {
             $(cells[i]).addClass("start");
@@ -277,6 +330,14 @@ function clearBoard(keepWalls) {
             $(cells[i]).addClass("check1");
         } else if (keepWalls && isWall) {
             $(cells[i]).addClass("wall");
+        } else if(keepWalls && isHill){
+            $(cells[i]).addClass("hill"); 
+        } else if(keepWalls && isCrater){
+            $(cells[i]).addClass("crater"); 
+        } else if(keepWalls && isIce){
+            $(cells[i]).addClass("ice"); 
+        } else if(keepWalls && isStorm){
+            $(cells[i]).addClass("storm"); 
         }
     }
 }
@@ -299,10 +360,14 @@ function manyD() {
 }
 
 
+//Javascript file to include A* algo
+document.write('<script type="text/javascript" src="Javascript files/Passing through a checkpoint/A*_algo.js" ></script>');
+
+//Javascript file to include Djikstra algo
+document.write('<script type="text/javascript" src="Javascript files/Passing through a checkpoint/dijkstra_algo.js" ></script>');
 
 //Javascript file to include mouse functions
 document.write('<script type="text/javascript" src="Javascript files/Passing through a checkpoint/mouse_functionsC.js" ></script>');
-
 
 //Javascript file to include Bfs algo
 document.write('<script type="text/javascript" src="Javascript files/Passing through a checkpoint/bfs_on_checkpoint.js" ></script>');

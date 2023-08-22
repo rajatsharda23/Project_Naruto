@@ -285,6 +285,11 @@ function clearBoard(keepWalls) {
     var endCell1Index = (destination1[0] * (maxCols)) + destination1[1];
     for (var i = 0; i < cells.length; i++) {
         isWall = $(cells[i]).hasClass("wall");
+        isWall = $( cells[i] ).hasClass("wall");
+		isHill = $( cells[i] ).hasClass("hill");
+		isCrater = $( cells[i] ).hasClass("crater");
+		isIce = $( cells[i] ).hasClass("ice");
+		isStorm = $( cells[i] ).hasClass("storm");
         $(cells[i]).removeClass();
         if (i == startCellIndex) {
             $(cells[i]).addClass("start");
@@ -294,6 +299,14 @@ function clearBoard(keepWalls) {
             $(cells[i]).addClass("end1");
         } else if (keepWalls && isWall) {
             $(cells[i]).addClass("wall");
+        } else if(keepWalls && isHill){
+            $(cells[i]).addClass("hill"); 
+        } else if(keepWalls && isCrater){
+            $(cells[i]).addClass("crater"); 
+        } else if(keepWalls && isIce){
+            $(cells[i]).addClass("ice"); 
+        } else if(keepWalls && isStorm){
+            $(cells[i]).addClass("storm"); 
         }
     }
 }
