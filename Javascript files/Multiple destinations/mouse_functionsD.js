@@ -2,6 +2,53 @@
 //Mouse functions
 //************************************ 
 
+var createHill = false;
+var createCrater = false;
+var createIce = false;
+var createStorm = false;
+
+function hill_true() {
+	createHill = document.getElementById("hillCheck").checked;
+	document.getElementById("iceCheck").checked = false;
+	document.getElementById("stormCheck").checked = false;
+	document.getElementById("craterCheck").checked = false;
+	createCrater = false;
+    createIce = false;
+	createStorm = false;
+}
+
+function crater_true() {
+	createCrater = document.getElementById("craterCheck").checked;
+	document.getElementById("iceCheck").checked = false;
+	document.getElementById("stormCheck").checked = false;
+	document.getElementById("hillCheck").checked = false;
+	createHill = false;
+    createIce = false;
+	createStorm = false;
+}
+
+function ice_true() {
+	createIce = document.getElementById("iceCheck").checked;
+	document.getElementById("hillCheck").checked = false;
+	document.getElementById("stormCheck").checked = false;
+	document.getElementById("craterCheck").checked = false;
+	createCrater = false;
+    createHill = false;
+	createStorm = false;
+}
+
+function storm_true() {
+	createStorm = document.getElementById("stormCheck").checked;
+	document.getElementById("iceCheck").checked = false;
+	document.getElementById("hillCheck").checked = false;
+	document.getElementById("craterCheck").checked = false;
+	createCrater = false;
+    createIce = false;
+	createHill = false;
+}
+
+
+
 $("td").mousedown(function() {
     var index = $("td").index(this);
     var startCellIndex = (source[0] * (maxCols)) + source[1];
@@ -56,9 +103,23 @@ $("td").mouseenter(function() {
         } else if (movingDest1 && index != startCellIndex && index != endCellIndex) {
             moveStartOrEnd(endCell1Index, index, "end1");
         } else if (index != startCellIndex && index != endCellIndex && index != endCell1Index) {
-            $(this).toggleClass("wall");
-        }
-
+            // $(this).toggleClass("wall");
+            if(createHill){
+				$(this).toggleClass("hill");
+			}
+			else if(createCrater){
+				$(this).toggleClass("crater");
+			}
+			else if(createIce){
+				$(this).toggleClass("ice");
+			}
+			else if(createStorm){
+				$(this).toggleClass("storm");
+			}
+			else{
+				$(this).toggleClass("wall");
+			}
+        } 
 
     }
 });
@@ -73,9 +134,27 @@ $("td").click(function() {
         if (justFinished) {
             clearBoard(keepWalls = true);
             justFinished = false;
+            $(this).toggleClass("wall");
         }
-        $(this).toggleClass("wall");
+        
+        if(createHill){
+            $(this).toggleClass("hill");
+        }
+        else if(createCrater){
+            $(this).toggleClass("crater");
+        }
+        else if(createIce){
+            $(this).toggleClass("ice");
+        }
+        else if(createStorm){
+            $(this).toggleClass("storm");
+        }
+        else{
+            $(this).toggleClass("wall");
+        }	
     }
+    
+
 });
 
 
@@ -104,4 +183,9 @@ $("#algorithms .dropdown-item").click(function() {
     algo = $(this).text();
     updateStart();
     console.log("Algorithm has been changd to: " + algo);
+});
+
+$( "#speed .dropdown-item").click(function(){
+	speed = $(this).text();
+	getDelay(speed);
 });

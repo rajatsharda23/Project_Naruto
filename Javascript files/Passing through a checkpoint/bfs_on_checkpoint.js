@@ -11,7 +11,7 @@ function bfsFromStoC(diagonal) {
     //getting direction vectors as per the allowed movement
     let dir = setDirection(diagonal);
     //creating a "visited" array to keep track of the visited nodes
-    let vis = new Array(maxCols * maxRows);
+    vis = new Array(maxCols * maxRows);
     //Adding a true value corresponding to cells that are walls
     vis = addWalls(vis, diagonal);
     console.log("walls added");

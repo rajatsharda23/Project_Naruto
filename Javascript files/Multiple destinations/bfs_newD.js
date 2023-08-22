@@ -31,15 +31,19 @@ function bfs(diagonal) {
         if ((removedNode[0] == destination[0] && removedNode[1] == destination[1]) || (removedNode[0] == destination1[0] && removedNode[1] == destination1[1])) {
             console.log("end cell found");
             // prevArr[removedNode[0]][removedNode[1]] = removedNode;
-
+            
+            let flag1 = false;
+            let flag2 = false;
 
             if (removedNode[0] == destination[0] && removedNode[1] == destination[1]) {
                 whichEnd = 0;
+                flag1 = true;
                 pathFound = true;
 
             } else if (removedNode[0] == destination1[0] && removedNode[1] == destination1[1]) {
                 whichEnd = 1;
                 pathFound = true;
+                flag2 = true;
             }
             break;
         }
